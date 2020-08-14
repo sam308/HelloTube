@@ -4,6 +4,8 @@ import { Grid } from '@material-ui/core';
 import { SearchBar, VideoDetail, VideoList } from './components';
 
 import youtube from './api/youtube';
+import styles from './App.module.css';
+import logoImage from './images/hellotube.png'; 
 
 class App extends React.Component {
 
@@ -13,7 +15,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.handleSubmit('taylor swift');
+        this.handleSubmit('cricket');
     }
 
     onSelectVideo = (video) => {
@@ -26,8 +28,8 @@ class App extends React.Component {
         const response = await youtube.get('search', { 
             params: {
                 part: 'snippet',
-                maxResults: 5,
-                key: 'AIzaSyB1Xt1UR0hx8z_M1XKjtZkIggLhRTqwOEU',
+                maxResults: 8,
+                key: '[API_KEY]',
                 q: searchTerm,
             }
         });
@@ -44,21 +46,27 @@ class App extends React.Component {
         const { video, selectedVideo } = this.state;
 
         return(
-            <Grid justify="center" container spacing={10}>
-                <Grid item xs={11}>
-                    <Grid container spacing={10}>
-                        <Grid item xs={12}>
-                            <SearchBar onFormSubmit={this.handleSubmit}></SearchBar>
-                        </Grid> 
-                        <Grid item xs={8}>
-                            <VideoDetail video={selectedVideo} ></VideoDetail>
+        
+            <div className={styles.outerDIV}>
+                <Grid justify="center" container spacing={10}>
+                    <Grid item xs={11} className={styles.outside} >
+                        <h1 className={styles.headline}>Welcome to HelloTube, my very own YouTube player!<img src={logoImage} alt="HelloTube Logo"></img> © Samarpan Chakravarty, 2020. </h1>
+                    </Grid>
+                    <Grid item xs={11}>
+                        <Grid container spacing={10}>
+                            <Grid item xs={12}>
+                                <SearchBar onFormSubmit={this.handleSubmit}></SearchBar>
+                            </Grid> 
+                            <Grid item md={8} xs={10}>
+                                <VideoDetail video={selectedVideo} ></VideoDetail>
+                            </Grid>
+                            <Grid item md={4} xs={10}>
+                                <VideoList video={video} onSelectVideo={this.onSelectVideo} ></VideoList>
+                            </Grid> 
                         </Grid>
-                        <Grid item xs={4}>
-                            <VideoList video={video} onSelectVideo={this.onSelectVideo} ></VideoList>
-                        </Grid> 
                     </Grid>
                 </Grid>
-            </Grid>
+            </div>
         )
     }
 }

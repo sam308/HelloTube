@@ -1,0 +1,13 @@
+.outside {
+    background-color: black;
+}
+
+.headline {
+    align-self: center;
+    color: #d3982b;
+}
+
+.outerDIV {
+    display: flex;
+    flex-direction: column;
+}
